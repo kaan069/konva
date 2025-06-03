@@ -101,7 +101,7 @@ const KonvaCanvas: React.FC<KonvaCanvasProps> = ({
     const newShape: Shape = {
       id: Date.now().toString(),
       type: selectedTool,
-      points: [pos.x, pos.y],
+      points: selectedTool === 'line' ? [pos.x, pos.y, pos.x, pos.y] : [pos.x, pos.y],
       x: pos.x,
       y: pos.y,
       width: 0,
@@ -125,6 +125,12 @@ const KonvaCanvas: React.FC<KonvaCanvasProps> = ({
       const updatedShape = {
         ...currentShape,
         points: [...currentShape.points, pos.x, pos.y],
+      };
+      setCurrentShape(updatedShape);
+    } else if (currentShape.type === 'line') {
+      const updatedShape = {
+        ...currentShape,
+        points: [currentShape.x, currentShape.y, pos.x, pos.y],
       };
       setCurrentShape(updatedShape);
     } else {
